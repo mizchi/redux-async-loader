@@ -1,3 +1,4 @@
+/* @flow */
 /*
  * A part of these functions are:
  *   Copyright (c) 2015-present, Ryan Florence, Michael Jackson
@@ -7,7 +8,7 @@
 
 import { getParamNames } from 'react-router/lib/PatternUtils';
 
-export default function computeChangedRoutes(prevState, nextState) {
+export default function computeChangedRoutes(prevState: any, nextState: any) {
   const prevRoutes = prevState && prevState.routes;
   const nextRoutes = nextState.routes;
 
@@ -15,12 +16,13 @@ export default function computeChangedRoutes(prevState, nextState) {
     return nextRoutes;
   }
 
-  const leaveIndex = prevRoutes.findIndex((route) => (
-    nextRoutes.indexOf(route) === -1 ||
-    routeParamsChanged(route, prevState, nextState) ||
-    queryParamsChanged(route, prevState, nextState) ||
-    routeChanged(route, prevState, nextState)
-  ));
+  const leaveIndex = prevRoutes.findIndex(
+    (route) =>
+      nextRoutes.indexOf(route) === -1 ||
+      routeParamsChanged(route, prevState, nextState) ||
+      queryParamsChanged(route, prevState, nextState) ||
+      routeChanged(route, prevState, nextState)
+  );
   const leaveRoutes = leaveIndex === -1 ? [] : prevRoutes.slice(leaveIndex);
 
   return nextRoutes.filter((route) => {
@@ -38,9 +40,7 @@ function routeParamsChanged(route, prevState, nextState) {
 
   const paramNames = getParamNames(route.path);
 
-  return paramNames.some((paramName) =>
-    prevState.params[paramName] !== nextState.params[paramName]
-  );
+  return paramNames.some((paramName) => prevState.params[paramName] !== nextState.params[paramName]);
 }
 
 function queryParamsChanged(route, prevState, nextState) {
@@ -56,8 +56,10 @@ function queryParamsChanged(route, prevState, nextState) {
     const prevQueryKeys = Object.keys(prevQuery);
     const nextQueryKeys = Object.keys(nextQuery);
 
-    return prevQueryKeys.length !== nextQueryKeys.length ||
-      prevQueryKeys.some((key) => prevQuery[key] !== nextQuery[key]);
+    return (
+      prevQueryKeys.length !== nextQueryKeys.length ||
+      prevQueryKeys.some((key) => prevQuery[key] !== nextQuery[key])
+    );
   }
 
   const keys = queryKeys.split(/[, ]+/);

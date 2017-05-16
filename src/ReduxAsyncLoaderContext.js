@@ -1,4 +1,6 @@
+/* @flow */
 /* eslint-disable react/no-set-state */
+/* eslint-disable react/sort-comp */
 
 /*
  * A part of these functions are:
@@ -15,8 +17,12 @@ import flattenComponents from './flattenComponents';
 import loadAsync from './loadAsync';
 import { reducerName } from './names';
 
-class ReduxAsyncLoaderContext extends Component {
-  constructor(props, context) {
+class ReduxAsyncLoaderContext extends Component<*, *, *> {
+  defaultProps: any;
+  loadCount: number;
+  state: any;
+
+  constructor(props: any, context: any) {
     super(props, context);
 
     this.state = {
@@ -40,7 +46,7 @@ class ReduxAsyncLoaderContext extends Component {
     this.loadAsync(this.props);
   }
 
-  componentWillReceiveProps(nextProps) {
+  componentWillReceiveProps(nextProps: any) {
     if (nextProps.location === this.props.location) {
       return;
     }
@@ -56,7 +62,7 @@ class ReduxAsyncLoaderContext extends Component {
     this.loadAsync(Object.assign({}, nextProps, { components }));
   }
 
-  shouldComponentUpdate(nextProps, nextState) {
+  shouldComponentUpdate(nextProps: any, nextState: any) {
     const { loading } = this.getAsyncLoaderState();
     return !loading;
   }
@@ -67,7 +73,7 @@ class ReduxAsyncLoaderContext extends Component {
     return getAsyncLoaderState(getState());
   }
 
-  loadAsync(props) {
+  loadAsync(props: any) {
     const { children, components } = props;
 
     const flattened = flattenComponents(components);
@@ -79,13 +85,10 @@ class ReduxAsyncLoaderContext extends Component {
     const { dispatch } = store;
     this.beginLoad(dispatch, children)
       .then(() => loadAsync(flattened, props, store))
-      .then(
-        () => this.endLoad(dispatch),
-        (error) => this.endLoad(dispatch, error)
-      );
+      .then(() => this.endLoad(dispatch), (error) => this.endLoad(dispatch, error));
   }
 
-  beginLoad(dispatch, children) {
+  beginLoad(dispatch: any, children: any) {
     if (this.loadCount === 0) {
       dispatch(beginAsyncLoad());
     }
@@ -96,7 +99,7 @@ class ReduxAsyncLoaderContext extends Component {
     });
   }
 
-  endLoad(dispatch, error) {
+  endLoad(dispatch: Function, error: ?any) {
     if (error) {
       this.props.onError(error);
     }

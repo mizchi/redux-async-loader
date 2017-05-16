@@ -1,3 +1,4 @@
+/* @flow */
 /*
  * A part of these functions are:
  *   Copyright (c) 2015 Ryan Florence
@@ -22,7 +23,7 @@ function eachComponents(components, cb) {
 }
 
 // based on https://github.com/ryanflorence/async-props/blob/v0.3.2/modules/AsyncProps.js#L20-L27
-export default function flattenComponents(components) {
+export default function flattenComponents(components: any) {
   const flattened = [];
   eachComponents(components, (Component) => {
     if (Component && Component[loadAsyncPropertyName]) {

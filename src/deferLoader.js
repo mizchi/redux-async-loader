@@ -1,9 +1,10 @@
+/* @flow */
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import hoistStatics from 'hoist-non-react-statics';
 
-export default function deferLoader(loader) {
-  return (WrappedComponent) => {
+export default function deferLoader(loader: Function) {
+  return (WrappedComponent: any) => {
     class WrapperComponent extends Component {
       componentDidMount() {
         const { store } = this.context;
@@ -16,9 +17,7 @@ export default function deferLoader(loader) {
       }
 
       render() {
-        return (
-          <WrappedComponent {...this.props} />
-        );
+        return <WrappedComponent {...this.props} />;
       }
     }
 

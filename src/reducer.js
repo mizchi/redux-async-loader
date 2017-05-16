@@ -1,3 +1,4 @@
+/* @flow */
 import { BEGIN_ASYNC_LOAD, END_ASYNC_LOAD, SKIP_ASYNC_LOAD } from './actions';
 
 const INITIAL_STATE = {
@@ -6,7 +7,10 @@ const INITIAL_STATE = {
   onServer: false,
 };
 
-export default function reducer(state = INITIAL_STATE, { type, payload } = {}) {
+export default function reducer(
+  state: typeof INITIAL_STATE = INITIAL_STATE,
+  { type, payload }: { type: string, payload: any } = {}
+) {
   switch (type) {
     case BEGIN_ASYNC_LOAD:
       return {

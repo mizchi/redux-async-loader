@@ -1,8 +1,9 @@
+/* @flow */
 import { beginAsyncLoad, endAsyncLoad } from './actions';
 import flattenComponents from './flattenComponents';
 import loadAsync from './loadAsync';
 
-export default function loadOnServer(renderProps, store) {
+export default function loadOnServer(renderProps: any, store: any) {
   const flattened = flattenComponents(renderProps.components);
   if (!flattened.length) {
     return Promise.resolve();
