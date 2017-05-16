@@ -47,6 +47,12 @@ class ReduxAsyncLoaderContext extends Component<*, *, *> {
   }
 
   componentWillReceiveProps(nextProps: any) {
+    // FIXME: Dirty check for stop by global
+    // I want to take this flag by reducer, but dispatching action can not intercept at same request frame.
+    if (global.FLAG_FOR_STOP_ASYNC_LOAD) {
+      return;
+    }
+
     if (nextProps.location === this.props.location) {
       return;
     }

@@ -26,6 +26,7 @@
     "src"
   ],
   "scripts": {
+    "prepare": "npm run build",
     "build": "babel src --out-dir lib",
     "clean": "rimraf lib/*",
     "fixpack": "fixpack",
